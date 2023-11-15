@@ -1,0 +1,58 @@
+name: database opens PR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate-db:
+    runs-on: ubuntu-latest
+    steps:
+      - name: '1. Checkout repo files'
+        uses: actions/checkout@v2
+        
+      - name: '2. Set timestamp variable'
+        id: timestamp
+        run: echo "branchtimestamp=$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_OUTPUT
+
+      - name: '3. Reset existing database files in repo'
+        run: rm -f -r AdventureWorks
+
+      - name: '4. Deconstruct database objects to files'
+        run: |
+          sqlpackage /Action:Extract /SourceConnectionString:"${{ secrets.SQL_CONNECTION }}" /TargetFile:"AdventureWorks" /p:ExtractTarget=ObjectType
+
+      - name: '5. Check if there is any changes with git'
+        id: get_changes
+        run: echo "changed=$(git status --porcelain | wc -l)" >> $GITHUB_OUTPUT
+
+      # if there are changes commit and push
+      - name: '6. Process changes into a git commit'
+        if: steps.get_changes.outputs.changed != 0
+        run: |
+          git config --global user.email "dbbot@email.com"
+          git config --global user.name "Database Status Bot"
+          git switch -c db-deconstruction-${{ steps.timestamp.outputs.branchtimestamp }}
+          git add AdventureWorks
+          git commit -m "Update database deconstruction"
+          git push -u origin db-deconstruction-${{ steps.timestamp.outputs.branchtimestamp }}
+
+      # open pull request
+      - name: '7. open a pull request'
+        id: pull_request
+        if: steps.get_changes.outputs.changed != 0
+        uses: vsoch/pull-request-action@1.0.19
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST_FROM_BRANCH: "db-deconstruction-${{ steps.timestamp.outputs.branchtimestamp }}"
+          PULL_REQUEST_BRANCH: "main"
+          PULL_REQUEST_TITLE: "Update database state"
+
+      - name: '8a. output summary with PR link'
+        if: steps.get_changes.outputs.changed != 0
+        run: |
+          echo "### :bell: New pull request ${{ steps.pull_request.outputs.pull_request_url }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: '8b. output summary with no changes'
+        if: steps.get_changes.outputs.changed == 0
+        run: |
+          echo "### :tada: No database drift detected" >> $GITHUB_STEP_SUMMARY
