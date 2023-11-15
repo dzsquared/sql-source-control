@@ -15,14 +15,14 @@ CREATE TABLE [SalesLT].[Address] (
 
 GO
 
-CREATE NONCLUSTERED INDEX [IX_Address_StateProvince]
-    ON [SalesLT].[Address]([StateProvince] ASC);
+CREATE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion]
+    ON [SalesLT].[Address]([AddressLine1] ASC, [AddressLine2] ASC, [City] ASC, [StateProvince] ASC, [PostalCode] ASC, [CountryRegion] ASC);
 
 
 GO
 
-CREATE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion]
-    ON [SalesLT].[Address]([AddressLine1] ASC, [AddressLine2] ASC, [City] ASC, [StateProvince] ASC, [PostalCode] ASC, [CountryRegion] ASC);
+CREATE NONCLUSTERED INDEX [IX_Address_StateProvince]
+    ON [SalesLT].[Address]([StateProvince] ASC);
 
 
 GO
