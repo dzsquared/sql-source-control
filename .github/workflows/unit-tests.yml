@@ -29,11 +29,6 @@ jobs:
       - name: 'checkout code'
         uses: actions/checkout@v3
 
-      - name: 'install sql proj templates and add sqlproj file'
-        run: |
-          dotnet new -i microsoft.build.sql.templates
-          dotnet new sqlproj -n AdventureWorks
-
       - name: 'wait for sql container to be ready'
         run: |
           set +o pipefail +e
