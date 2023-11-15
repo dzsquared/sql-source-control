@@ -57,7 +57,7 @@ jobs:
         uses: azure/sql-action@v2
         with:
           connection-string: 'Server=localhost;Database=testingDB;User Id=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
-          path: 'UnitTests/TestsSQLServer.sqlproj'
+          path: 'UnitTests/UnitTests.sqlproj'
           action: 'publish'
           arguments: '/p:IncludeCompositeObjects=True'
 
@@ -65,4 +65,4 @@ jobs:
         uses: azure/sql-action@v2
         with:
           connection-string: 'Server=localhost;Database=testingDB;User ID=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
-          path: 'UnitTests/myTests/demoExecAzureSQL.sql' # the tsqlt test command
+          path: 'UnitTests/myTests/ExecTest.sql' # the tsqlt test command
