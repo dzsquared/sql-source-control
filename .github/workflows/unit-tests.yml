@@ -50,14 +50,14 @@ jobs:
         uses: azure/sql-action@v2
         with:
           connection-string: 'Server=localhost;Database=master;User Id=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
-          path: 'database/TestsSQLServer/tsqlt/PrepareServer.sql' # the sql script to configure for clr
+          path: 'UnitTests/tsqlt/PrepareServer.sql' # the sql script to configure for clr
 
       # deploy the sql project
       - name: 'Deploy SQL Projects'
         uses: azure/sql-action@v2
         with:
           connection-string: 'Server=localhost;Database=testingDB;User Id=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
-          path: 'database/TestsSQLServer/TestsSQLServer.sqlproj'
+          path: 'UnitTests/TestsSQLServer.sqlproj'
           action: 'publish'
           arguments: '/p:IncludeCompositeObjects=True'
 
@@ -65,4 +65,4 @@ jobs:
         uses: azure/sql-action@v2
         with:
           connection-string: 'Server=localhost;Database=testingDB;User ID=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
-          path: 'database/TestsSQLServer/myTests/demoExecAzureSQL.sql' # the tsqlt test command
+          path: 'UnitTests/myTests/demoExecAzureSQL.sql' # the tsqlt test command
