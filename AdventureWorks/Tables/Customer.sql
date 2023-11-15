@@ -21,6 +21,12 @@ CREATE TABLE [SalesLT].[Customer] (
 
 GO
 
+CREATE NONCLUSTERED INDEX [IX_Customer_MiddleName]
+    ON [SalesLT].[Customer]([MiddleName] ASC, [CompanyName] ASC, [EmailAddress] ASC, [PasswordSalt] ASC);
+
+
+GO
+
 CREATE NONCLUSTERED INDEX [IX_Customer_EmailAddress]
     ON [SalesLT].[Customer]([EmailAddress] ASC);
 
