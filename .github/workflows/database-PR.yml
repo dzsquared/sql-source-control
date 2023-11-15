@@ -21,6 +21,11 @@ jobs:
         run: |
           sqlpackage /Action:Extract /SourceConnectionString:"${{ secrets.SQL_CONNECTION }}" /TargetFile:"AdventureWorks" /p:ExtractTarget=ObjectType
 
+      - name: '4b. optional - add a sqlproj to folder'
+        run: |
+          dotnet new install microsoft.build.sql.templates
+          dotnet new sqlproj -o AdventureWorks -tp Sql160
+
       - name: '5. Check if there is any changes with git'
         id: get_changes
         run: echo "changed=$(git status --porcelain | wc -l)" >> $GITHUB_OUTPUT
