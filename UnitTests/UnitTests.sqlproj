@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build">
+  <Sdk Name="Microsoft.Build.Sql" Version="0.1.14-preview" />
+  <PropertyGroup>
+    <Name>Tests</Name>
+    <ProjectGuid>{841F91F6-D72F-4016-96C7-8DAB11BE6FAC}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <ModelCollation>1033, CI</ModelCollation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Build Remove="myTests\ExecTest.sql" />
+    <Build Remove="setups\setupDatabase.sql" />
+    <Build Remove="tsqlt\PrepareServer.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="myTests\demoTest_ufnGetCustomerInformation.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="tsqlt\tsqlt.dacpac">
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+    </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdventureWorks\AdventureWorks.sqlproj">
+      <Name>AdventureWorks</Name>
+      <Project>{FB6E962E-5FA1-446B-96E1-2EDE2B36414C}</Project>
+      <Private>True</Private>
+      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
