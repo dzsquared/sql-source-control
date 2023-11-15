@@ -1,0 +1,73 @@
+name: unit tests
+
+# Note: If you need to make changes to this file, please use a branch off the main branch instead of a fork.
+# The pull_request target from a forked repo will not have access to the secrets needed for this workflow.
+
+on:
+  # pull_request_target:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'AdventureWorks/**'
+
+jobs:
+  build-and-deploy:
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+
+    # service/sidecar container for azure-sql-edge
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: 1
+          SA_PASSWORD: ${{ secrets.CONTAINER_SQL_PASSWORD }}
+        ports:
+          - 1433:1433
+
+    steps:
+      - name: 'checkout code'
+        uses: actions/checkout@v3
+
+      - name: 'install sql proj templates and add sqlproj file'
+        run: |
+          dotnet new -i microsoft.build.sql.templates
+          dotnet new sqlproj -n AdventureWorks
+
+      - name: 'wait for sql container to be ready'
+        run: |
+          set +o pipefail +e
+          for i in {1..60};
+          do
+              sqlcmd -S localhost -U sa -P ${{ secrets.CONTAINER_SQL_PASSWORD }} -d master -Q "select getdate()"
+              if [ $? -eq 0 ]
+              then
+                  echo "sql server ready"
+                  break
+              else
+                  echo "not ready yet..."
+                  sleep 1
+              fi
+          done
+          set -o pipefail -e
+
+      - name: 'Create and setup database'
+        uses: azure/sql-action@v2
+        with:
+          connection-string: 'Server=localhost;Database=master;User Id=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
+          path: 'database/TestsSQLServer/tsqlt/PrepareServer.sql' # the sql script to configure for clr
+
+      # deploy the sql project
+      - name: 'Deploy SQL Projects'
+        uses: azure/sql-action@v2
+        with:
+          connection-string: 'Server=localhost;Database=testingDB;User Id=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
+          path: 'database/TestsSQLServer/TestsSQLServer.sqlproj'
+          action: 'publish'
+          arguments: '/p:IncludeCompositeObjects=True'
+
+      - name: 'Run tSQLt tests'
+        uses: azure/sql-action@v2
+        with:
+          connection-string: 'Server=localhost;Database=testingDB;User ID=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;'
+          path: 'database/TestsSQLServer/myTests/demoExecAzureSQL.sql' # the tsqlt test command
