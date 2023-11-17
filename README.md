@@ -35,6 +35,8 @@ sqlpackage /a:extract /ssn:localhost /sdn:AdventureWorks /su:sa /sp:Passw0rd /st
 - `/a:extract` specifies the action to perform a schema extraction with `/p:ExtractTarget=ObjectType` organizing the files into folders by object type
 - `/tf:AdventureWorks` sets the output location to the [AdventureWorks](AdventureWorks) folder
 
+More details available in the [Convert your database to code](Tutorial/convert-your-database-to-code.md) quickstart guide.
+
 ## Optional steps
 
 ### 🤖 Setup an automated process to check the database into source control
@@ -51,6 +53,8 @@ The [GitHub Actions workflow](.github/workflows/database-pr.yml) in this repo is
 6. If there are changes, create a new branch with the timestamp as the name and commit the changes to the branch
 7. If there are changes, open a PR to the main branch as 'Database Status Bot'
 8. Output a summary to the workflow log
+
+More details available in the [Automate your database source control](Tutorial/automate-your-database-source-control.md) quickstart guide.
 
 ### Convert the folder of files to a SQL project
 
