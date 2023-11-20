@@ -78,3 +78,8 @@ Layering a unit test project and set of unit tests on your database code enables
 There is a very small example of utilizing the [tSQLt unit test framework](https://tsqlt.org/) in the [UnitTests](UnitTests) folder and with the [unit-tests.yml](.github/workflows/unit-tests.yml) GitHub Actions workflow.
 
 In this repository, the unit tests example is more of an aspirational future state than the first step.  The first step is to get your database code into source control and then you can layer on unit tests or any other DevOps concepts that are right for your environment.
+
+
+## 📗 Resources
+
+The deck from the PASS Summit 2023 session "It’s Under Control, But Is It Under Source Control?​" is available in [Resources](Resources/UnderControlSourceControl.pdf).
