@@ -49,6 +49,7 @@ The [GitHub Actions workflow](.github/workflows/database-pr.yml) in this repo is
 2. Setting a timestamp variable to use as a branch name
 3. Reset the database files in the environment by removing them
 4. Run the `sqlpackage` command to extract the database schema to the pipeline environment
+4b. (optional) Adds a .sqlproj file to the folder
 5. Use `git status` to see if there are changes
 6. If there are changes, create a new branch with the timestamp as the name and commit the changes to the branch
 7. If there are changes, open a PR to the main branch as 'Database Status Bot'
