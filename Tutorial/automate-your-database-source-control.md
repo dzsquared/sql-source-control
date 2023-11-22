@@ -75,8 +75,11 @@ To enable the required permissions:
 2. switch actions repository permissions to "read and write" from "read"
 3. enable access to the GITHUB_TOKEN
 
-## Environment requirements
+### Environment requirements
 
+The [database-PR.yml](../github/worfklows/database-PR.yml) workflow requires the SQL connection string to be set in the repository secrets as `SQL_CONNECTION`.  This connection string is used to connect to the database and extract the schema to code.  Add the `SQL_CONNECTION` secret to your GitHub repository by following the documentation [here](https://docs.github.com/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository).
+
+In the default GitHub Actions and Azure DevOps pipelines environments, SqlPackage is installed automatically.  If you are using a self-hosted agent, you will need to install SqlPackage manually.
 
 ## Next steps
 
