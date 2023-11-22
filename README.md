@@ -70,6 +70,8 @@ We will add a .sqlproj file to the folder with our database objects, enabling th
 dotnet new sqlproj -n AdventureWorks
 ```
 
+More information on SQL projects is available in a [brief article](Resources/what-is-a-sql-project.md) and in the [Microsoft.Build.Sql repository](https://github.com/microsoft/DacFx/blob/main/src/Microsoft.Build.Sql/docs/Tutorial.md).
+
 ### Run unit tests on your database code
 
 > Prerequisite: SQL project file on your database code
