@@ -49,6 +49,7 @@ The [GitHub Actions workflow](.github/workflows/database-pr.yml) in this repo is
 2. Setting a timestamp variable to use as a branch name
 3. Reset the database files in the environment by removing them
 4. Run the `sqlpackage` command to extract the database schema to the pipeline environment
+4b. (optional) Adds a .sqlproj file to the folder
 5. Use `git status` to see if there are changes
 6. If there are changes, create a new branch with the timestamp as the name and commit the changes to the branch
 7. If there are changes, open a PR to the main branch as 'Database Status Bot'
@@ -68,6 +69,8 @@ We will add a .sqlproj file to the folder with our database objects, enabling th
 ```bash
 dotnet new sqlproj -n AdventureWorks
 ```
+
+More information on SQL projects is available in a [brief article](Resources/what-is-a-sql-project.md) and in the [Microsoft.Build.Sql repository](https://github.com/microsoft/DacFx/blob/main/src/Microsoft.Build.Sql/docs/Tutorial.md).
 
 ### Run unit tests on your database code
 
