@@ -65,6 +65,14 @@ sqlpackage /Action:Publish /SourceFile:bin/Debug/AdventureWorks.dacpac /TargetSe
 
 ### Connect to our new database
 
+The SQL instance in the container is similar to a SQL installation directly on a host OS, and can be connected to with any SQL client. This means that we can use Azure Data Studio, SQL Server Management Studio, or other tools that we're familiar with.
+
+When connecting to the database, we'll use the following connection string information:
+
+```txt
+Server=localhost,61433;Database=AdventureWorks;User Id=sa;Password=P@ssw0rd;Encrypt=true;TrustServerCertificate=true;
+```
+
 
 ## 🧙 All at once
 
@@ -107,4 +115,4 @@ sqlpackage /Action:Publish /SourceFile:bin/Debug/AdventureWorks.dacpac /TargetSe
 
 Optionally, follow up with:
 - [Add unit tests on your database](add-unit-tests-on-your-database.md)
-- [Leverage code analysis to provide automated feedback](code-analysis-automation.yml)
+<!-- - [Leverage code analysis to provide automated feedback](code-analysis-automation.yml) -->

@@ -88,4 +88,4 @@ Now that you've automated the conversion of your database to code, you can use t
 Optionally, follow up with:
 - [Deploy your database code to a container for development](deploy-to-a-container.md)
 - [Add unit tests on your database](add-unit-tests-on-your-database.md)
-- [Leverage code analysis to provide automated feedback](code-analysis-automation.yml)
+<!-- - [Leverage code analysis to provide automated feedback](code-analysis-automation.yml) -->
